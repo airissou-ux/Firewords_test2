@@ -402,6 +402,9 @@ async function loadDictionary() {
       }
     }
 
+    // Mots manquants dans fr.txt mais valides au Scrabble FR
+    ["AWALE","AWALES","AWELE","AWELES"].forEach(w => DICT.add(w));
+
     bar.style.width = "100%";
     msg.textContent = `${DICT.size.toLocaleString()} mots chargés ✓`;
     await sleep(400);
@@ -706,15 +709,19 @@ function handleValidate() {
   renderScore();
   renderWordPanel();
 
-  // After animation: free the cells — reset DOM explicitly to face-down blank
+  // After animation: free the cells — reset to face-down, no flip
   setTimeout(() => {
     const container = document.getElementById("grid");
     ids.forEach(id => {
       state.grid[id] = emptyCell(id);
       const el = container.children[id];
       if (el) {
-        el.className = "card";                         // face-down, no revealed
-        el.querySelector(".card-face").textContent = ""; // clear letter
+        // Désactiver la transition le temps du reset pour éviter le flip parasite
+        el.style.transition = "none";
+        el.className = "card";
+        el.querySelector(".card-face").textContent = "";
+        // Réactiver la transition au prochain frame
+        requestAnimationFrame(() => { el.style.transition = ""; });
       }
     });
   }, 350);
