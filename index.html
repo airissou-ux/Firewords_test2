@@ -838,19 +838,20 @@ function revealCardOnDOM(id, noFlip) {
   const container = document.getElementById("grid");
   const el = container.children[id];
   if (!el) return;
+  const inner = el.querySelector(".card-inner");  // la transition est sur .card-inner
   el.querySelector(".card-face").textContent = state.grid[id].letter || "";
   if (noFlip) {
-    // Apparition directe sans animation
-    el.style.transition = "none";
+    // Apparition directe : couper la transition sur .card-inner, poser revealed, réactiver
+    inner.style.transition = "none";
     el.className = "card revealed";
-    void el.offsetWidth;
-    el.style.transition = "";
+    void inner.offsetWidth;  // force reflow
+    inner.style.transition = "";
   } else {
-    // Flip normal : reset face-down puis flip
-    el.style.transition = "none";
+    // Flip normal : reset face-down sur .card-inner, puis flip
+    inner.style.transition = "none";
     el.className = "card";
-    void el.offsetWidth;
-    el.style.transition = "";
+    void inner.offsetWidth;
+    inner.style.transition = "";
     el.className = "card revealed";
   }
 }
