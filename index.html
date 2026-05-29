@@ -554,6 +554,10 @@ function drawLetter() {
 function startGame() {
   if (state.intervalId) clearInterval(state.intervalId);
 
+  // Vider le DOM de la grille pour repartir proprement (évite le bug revealed au rejouer)
+  const gridEl = document.getElementById("grid");
+  if (gridEl) gridEl.innerHTML = "";
+
   state.deck = shuffle([...LETTER_POOL]);
   state.grid = Array.from({length:20},(_,i) => emptyCell(i));
   state.selection = [];
