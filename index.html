@@ -581,11 +581,37 @@ function calcBonus(wordList) {
   wordList.forEach(w => { const l=Math.min(w.length,10); cnt[l>=10?10:l]++; });
   let len = 0;
   len += cnt[6]*1; len += cnt[7]*2; len += cnt[8]*3; len += cnt[9]*5; len += cnt[10]*10;
-  let fig = 0, figLabel = null;
-  if (cnt[6]>=1&&cnt[7]>=1&&cnt[8]>=1&&cnt[9]>=1&&cnt[10]>=1) { fig=75; figLabel="QUINTE FLUSH !"; }
-  else if (cnt[5]>=1&&cnt[6]>=1&&cnt[7]>=1&&cnt[8]>=1&&cnt[9]>=1) { fig=50; figLabel="QUINTE !"; }
-  else if (cnt[5]>=1&&cnt[6]>=1&&cnt[7]>=1&&cnt[8]>=1) { fig=25; figLabel="QUARTE !"; }
-  return {len, fig, figLabel};
+
+  // Figures répétables : on compte le nombre de séries complètes
+  // Quinte Flush = série 6+7+8+9+10 (la plus haute absorbe les autres)
+  // Quinte       = série 5+6+7+8+9
+  // Quarte       = série 5+6+7+8
+  // Chaque série complète supplémentaire rapporte son bonus
+
+  const qf = Math.min(cnt[6],cnt[7],cnt[8],cnt[9],cnt[10]); // nb Quintes Flush
+  // pour Quinte : après avoir "utilisé" les mots consommés par QF
+  const r5  = cnt[5];
+  const r6  = cnt[6] - qf;
+  const r7  = cnt[7] - qf;
+  const r8  = cnt[8] - qf;
+  const r9  = cnt[9] - qf;
+  const q   = Math.min(r5,r6,r7,r8,r9);    // nb Quintes
+  // pour Quarte : après avoir utilisé ceux consommés par QF et Q
+  const s5  = r5 - q;
+  const s6  = r6 - q;
+  const s7  = r7 - q;
+  const s8  = r8 - q;
+  const qa  = Math.min(s5,s6,s7,s8);       // nb Quartes
+
+  const fig = qf*75 + q*50 + qa*25;
+
+  // Label de la figure la plus haute nouvellement acquise (pour le badge)
+  let figLabel = null;
+  if (qf > 0) figLabel = qf > 1 ? `${qf}× QUINTE FLUSH !` : "QUINTE FLUSH !";
+  else if (q > 0) figLabel = q > 1 ? `${q}× QUINTE !` : "QUINTE !";
+  else if (qa > 0) figLabel = qa > 1 ? `${qa}× QUARTE !` : "QUARTE !";
+
+  return {len, fig, figLabel, qf, q, qa};
 }
 
 let state = {
@@ -938,7 +964,7 @@ function renderProgDots() {
 
 function renderGameOver(reason) {
   const wordList = state.wordList;
-  const {len, fig, figLabel} = calcBonus(wordList);
+  const {len, fig, figLabel, qf, q, qa} = calcBonus(wordList);
   const base = wordList.reduce((s,w) => s+w.length, 0);
   const total = base + len + fig;
   document.getElementById("go-title").textContent = reason==="mistakes" ? "3 FAUTES !" : "GRILLE PLEINE";
@@ -964,7 +990,9 @@ function renderGameOver(reason) {
   gb.innerHTML = `
     <div class="go-row"><span>Lettres collectées</span><span class="go-val">${base} pts</span></div>
     <div class="go-row"><span>Bonus longueur</span><span class="go-val">+${len} pts</span></div>
-    ${fig>0 ? `<div class="go-row"><span>${figLabel}</span><span class="go-val">+${fig} pts</span></div>` : ""}
+    ${qf>0 ? `<div class="go-row"><span>Quinte Flush ×${qf}</span><span class="go-val">+${qf*75} pts</span></div>` : ""}
+    ${q>0  ? `<div class="go-row"><span>Quinte ×${q}</span><span class="go-val">+${q*50} pts</span></div>` : ""}
+    ${qa>0 ? `<div class="go-row"><span>Quarte ×${qa}</span><span class="go-val">+${qa*25} pts</span></div>` : ""}
     <div class="go-row" style="border-bottom:none;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">
       <span style="font-weight:700;color:var(--text)">TOTAL</span>
       <span class="go-val" style="font-size:18px">${total} pts</span>
