@@ -104,7 +104,8 @@ body{display:flex;flex-direction:column;align-items:center;}
 #gameover .wood-frame{justify-content:flex-start;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding-top:24px;}
 .go-title{font-family:var(--font-title);font-size:clamp(36px,10vw,60px);font-weight:900;letter-spacing:.06em;color:var(--yellow);text-shadow:0 2px 12px #00000066;margin-top:8px;}
 .go-sub{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);margin-top:4px;margin-bottom:6px;}
-.go-score{font-family:var(--font-letter);font-size:72px;font-weight:700;color:var(--yellow);line-height:1;margin-bottom:18px;text-shadow:0 2px 20px #00000055;}
+.go-score{font-family:var(--font-letter);font-size:72px;font-weight:700;color:var(--yellow);line-height:1;margin-bottom:6px;text-shadow:0 2px 20px #00000055;}
+.go-level{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
 .go-words{width:100%;background:rgba(0,0,0,.25);border:1px solid rgba(245,200,0,.2);border-radius:3px;padding:12px;margin-bottom:10px;}
 .go-words-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:7px;}
 .go-words-list{display:flex;flex-wrap:wrap;gap:5px;}
@@ -206,9 +207,10 @@ body{display:flex;flex-direction:column;align-items:center;}
 
 <div class="screen" id="gameover">
   <div class="wood-frame">
-    <div class="go-title" id="go-title">GRILLE PLEINE</div>
+    <div class="go-title" id="go-title" style="text-align:center;width:100%">GRILLE PLEINE</div>
     <div class="go-sub">score final</div>
     <div class="go-score" id="go-score">0</div>
+    <div class="go-level" id="go-level"></div>
     <div class="go-words">
       <div class="go-words-title" id="go-words-title">0 mot trouvé</div>
       <div class="go-words-list" id="go-words-list"></div>
@@ -953,6 +955,8 @@ function renderGameOver(reason) {
   const total = base + len + fig;
   document.getElementById("go-title").textContent = reason==="mistakes" ? "3 FAUTES !" : "GRILLE PLEINE";
   document.getElementById("go-score").textContent = total;
+  const d = DIFFICULTY[state.diffIdx];
+  document.getElementById("go-level").textContent = d.icon + " " + d.label;
   const wt = document.getElementById("go-words-title");
   wt.textContent = `${wordList.length} mot${wordList.length!==1?"s":""} trouvé${wordList.length!==1?"s":""}`;
   const wl = document.getElementById("go-words-list");
