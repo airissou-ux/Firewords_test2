@@ -65,8 +65,7 @@ body{display:flex;flex-direction:column;align-items:center;}
 .profile-hero-emoji{font-size:44px;line-height:1;}
 .profile-hero-info{flex:1;}
 .profile-hero-pseudo{font-family:var(--font-title);font-size:24px;font-weight:900;
-  background:linear-gradient(135deg,var(--coral),var(--amber));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;}
+  color:#fff;line-height:1.1;}
 .profile-hero-email{font-size:11px;color:var(--dim);margin-top:3px;}
 
 /* Sections profil */
@@ -866,7 +865,6 @@ body{display:flex;flex-direction:column;align-items:center;}
       <div class="profile-hero-emoji" id="profile-hero-emoji">👤</div>
       <div class="profile-hero-info">
         <div class="profile-hero-pseudo" id="profile-hero-pseudo">…</div>
-        <div class="profile-hero-email" id="profile-hero-email"></div>
       </div>
     </div>
 
@@ -1198,7 +1196,6 @@ async function renderProfileModal() {
   if (!currentUser) {
     document.getElementById("profile-hero-emoji").textContent = "👤";
     document.getElementById("profile-hero-pseudo").textContent = "Non connecté";
-    document.getElementById("profile-hero-email").textContent = "";
     document.getElementById("stats-grid").innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--dim);font-size:13px;">
       Connecte-toi pour sauvegarder tes scores !<br><br>
       <button class="auth-btn" style="font-size:14px;padding:11px;" onclick="closeModal('modal-profile');showScreen('auth')">Se connecter</button>
@@ -1220,7 +1217,6 @@ async function renderProfileModal() {
   const heroPseudo = userProfile?.pseudo || currentUser?.email?.split("@")[0] || "—";
   document.getElementById("profile-hero-emoji").textContent = heroEmoji;
   document.getElementById("profile-hero-pseudo").textContent = heroPseudo;
-  document.getElementById("profile-hero-email").textContent = currentUser?.email || "";
 
   // Stats
   const { data: games } = await sb.from("games")
