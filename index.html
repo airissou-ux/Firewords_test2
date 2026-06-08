@@ -500,6 +500,31 @@ body{display:flex;flex-direction:column;align-items:center;}
 .prog-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s;}
 .prog-dot.on{background:var(--coral);box-shadow:0 0 6px var(--coral);}
 
+/* Édition pseudo */
+.pseudo-edit-wrap{display:flex;gap:8px;align-items:center;margin-bottom:16px;}
+.pseudo-display{font-family:var(--font-title);font-size:22px;font-weight:900;
+  background:linear-gradient(135deg,var(--coral),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;flex:1;}
+.pseudo-edit-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  color:var(--dim);font-size:12px;padding:6px 10px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.pseudo-edit-btn:hover{border-color:var(--sky);color:var(--sky);}
+.pseudo-input-wrap{display:none;flex-direction:column;gap:6px;margin-bottom:16px;}
+.pseudo-input-wrap.show{display:flex;}
+.pseudo-input-row{display:flex;gap:8px;}
+.pseudo-input{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;
+  padding:11px 13px;font-family:var(--font-ui);font-size:15px;font-weight:700;color:var(--text);outline:none;transition:border .2s;}
+.pseudo-input:focus{border-color:var(--sky);}
+.pseudo-input.ok{border-color:var(--lime);}
+.pseudo-input.taken{border-color:var(--coral);}
+.pseudo-status{font-size:11px;height:16px;transition:color .2s;}
+.pseudo-status.ok{color:var(--lime);}
+.pseudo-status.taken{color:var(--coral);}
+.pseudo-status.checking{color:var(--dim);}
+.pseudo-save-btn{background:linear-gradient(135deg,var(--lime),var(--sky));border:none;border-radius:10px;
+  color:#fff;font-family:var(--font-title);font-size:15px;font-weight:900;padding:11px 16px;
+  cursor:pointer;white-space:nowrap;transition:all .2s;}
+.pseudo-save-btn:disabled{opacity:.4;cursor:default;}
+
 /* Modal détail partie */
 #modal-game-detail .modal-sheet{max-height:85vh;}
 .detail-header{text-align:center;margin-bottom:16px;}
@@ -511,6 +536,31 @@ body{display:flex;flex-direction:column;align-items:center;}
 .detail-chip{background:var(--surface2);border:1px solid rgba(0,180,216,.25);border-radius:8px;
   font-family:var(--font-letter);font-size:12px;font-weight:800;padding:3px 9px;
   color:var(--sky);text-transform:uppercase;}
+
+/* Édition pseudo */
+.pseudo-edit-wrap{display:flex;gap:8px;align-items:center;margin-bottom:16px;}
+.pseudo-display{font-family:var(--font-title);font-size:22px;font-weight:900;
+  background:linear-gradient(135deg,var(--coral),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;flex:1;}
+.pseudo-edit-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  color:var(--dim);font-size:12px;padding:6px 10px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.pseudo-edit-btn:hover{border-color:var(--sky);color:var(--sky);}
+.pseudo-input-wrap{display:none;flex-direction:column;gap:6px;margin-bottom:16px;}
+.pseudo-input-wrap.show{display:flex;}
+.pseudo-input-row{display:flex;gap:8px;}
+.pseudo-input{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;
+  padding:11px 13px;font-family:var(--font-ui);font-size:15px;font-weight:700;color:var(--text);outline:none;transition:border .2s;}
+.pseudo-input:focus{border-color:var(--sky);}
+.pseudo-input.ok{border-color:var(--lime);}
+.pseudo-input.taken{border-color:var(--coral);}
+.pseudo-status{font-size:11px;height:16px;transition:color .2s;}
+.pseudo-status.ok{color:var(--lime);}
+.pseudo-status.taken{color:var(--coral);}
+.pseudo-status.checking{color:var(--dim);}
+.pseudo-save-btn{background:linear-gradient(135deg,var(--lime),var(--sky));border:none;border-radius:10px;
+  color:#fff;font-family:var(--font-title);font-size:15px;font-weight:900;padding:11px 16px;
+  cursor:pointer;white-space:nowrap;transition:all .2s;}
+.pseudo-save-btn:disabled{opacity:.4;cursor:default;}
 
 /* Modal détail partie */
 #modal-game-detail .modal-sheet{max-height:85vh;}
@@ -724,6 +774,17 @@ body{display:flex;flex-direction:column;align-items:center;}
     <div class="modal-handle"></div>
     <button class="modal-close" onclick="closeModal('modal-profile')">✕</button>
     <div class="modal-title" id="profile-title">Mon profil</div>
+    <div class="pseudo-edit-wrap" id="pseudo-edit-wrap">
+      <div class="pseudo-display" id="pseudo-display">…</div>
+      <button class="pseudo-edit-btn" onclick="togglePseudoEdit()">✏️ Modifier</button>
+    </div>
+    <div class="pseudo-input-wrap" id="pseudo-input-wrap">
+      <div class="pseudo-input-row">
+        <input class="pseudo-input" id="pseudo-new-input" placeholder="Nouveau pseudo" maxlength="20" autocomplete="off" oninput="checkPseudoAvailable()"/>
+        <button class="pseudo-save-btn" id="pseudo-save-btn" onclick="savePseudo()" disabled>OK</button>
+      </div>
+      <div class="pseudo-status" id="pseudo-status"></div>
+    </div>
     <div class="stats-grid" id="stats-grid"></div>
     <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;font-weight:700;">Dernières parties</div>
     <div class="history-list" id="history-list"></div>
@@ -938,6 +999,10 @@ async function renderProfileModal() {
   if (!userProfile && currentUser) await loadUserProfile();
   const pseudo = userProfile?.pseudo || currentUser?.email?.split("@")[0] || "Mon profil";
   title.textContent = pseudo;
+  const pseudoDisplay = document.getElementById("pseudo-display");
+  if (pseudoDisplay) pseudoDisplay.textContent = pseudo;
+  const pseudoEditWrap = document.getElementById("pseudo-edit-wrap");
+  if (pseudoEditWrap) pseudoEditWrap.style.display = currentUser ? "flex" : "none";
 
   const { data: games } = await sb.from("games")
     .select("*").eq("user_id", currentUser.id).order("score",{ascending:false}).limit(50);
@@ -974,6 +1039,78 @@ async function renderProfileModal() {
       </div>
     </div>`;
   }).join("");
+}
+
+// ── ÉDITION PSEUDO ──
+let pseudoCheckTimer = null;
+
+function togglePseudoEdit() {
+  const wrap = document.getElementById("pseudo-input-wrap");
+  const input = document.getElementById("pseudo-new-input");
+  const isShown = wrap.classList.contains("show");
+  wrap.classList.toggle("show", !isShown);
+  if (!isShown) { input.value = userProfile?.pseudo || ""; input.focus(); checkPseudoAvailable(); }
+}
+
+function checkPseudoAvailable() {
+  const input = document.getElementById("pseudo-new-input");
+  const status = document.getElementById("pseudo-status");
+  const saveBtn = document.getElementById("pseudo-save-btn");
+  const val = input.value.trim();
+  if (val.length < 3) {
+    input.className = "pseudo-input";
+    status.textContent = val.length > 0 ? "3 caractères minimum" : "";
+    status.className = "pseudo-status taken";
+    saveBtn.disabled = true;
+    return;
+  }
+  if (val === userProfile?.pseudo) {
+    input.className = "pseudo-input ok";
+    status.textContent = "Pseudo actuel";
+    status.className = "pseudo-status ok";
+    saveBtn.disabled = true;
+    return;
+  }
+  status.textContent = "Vérification…";
+  status.className = "pseudo-status checking";
+  input.className = "pseudo-input";
+  saveBtn.disabled = true;
+  clearTimeout(pseudoCheckTimer);
+  pseudoCheckTimer = setTimeout(async () => {
+    const { data } = await sb.from("profiles").select("id").eq("pseudo", val).maybeSingle();
+    if (data) {
+      input.className = "pseudo-input taken";
+      status.textContent = "❌ Pseudo déjà pris";
+      status.className = "pseudo-status taken";
+      saveBtn.disabled = true;
+    } else {
+      input.className = "pseudo-input ok";
+      status.textContent = "✓ Disponible !";
+      status.className = "pseudo-status ok";
+      saveBtn.disabled = false;
+    }
+  }, 500);
+}
+
+async function savePseudo() {
+  const val = document.getElementById("pseudo-new-input").value.trim();
+  const saveBtn = document.getElementById("pseudo-save-btn");
+  if (!val || val.length < 3 || !currentUser) return;
+  saveBtn.disabled = true; saveBtn.textContent = "…";
+  const { error } = await sb.from("profiles").update({ pseudo: val }).eq("id", currentUser.id);
+  if (error) {
+    document.getElementById("pseudo-status").textContent = "Erreur, réessaie";
+    document.getElementById("pseudo-status").className = "pseudo-status taken";
+    saveBtn.textContent = "OK"; saveBtn.disabled = false;
+    return;
+  }
+  if (userProfile) userProfile.pseudo = val;
+  document.getElementById("pseudo-input-wrap").classList.remove("show");
+  document.getElementById("pseudo-display").textContent = val;
+  document.getElementById("profile-title").textContent = val;
+  updateProfileUI();
+  showToast("Pseudo mis à jour !");
+  saveBtn.textContent = "OK";
 }
 
 function openGameDetail(encodedGame) {
