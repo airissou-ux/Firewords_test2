@@ -933,7 +933,11 @@ async function renderProfileModal() {
     return;
   }
   if (logoutBtn) logoutBtn.style.display = "block";
-  title.textContent = userProfile?.pseudo || "Mon profil";
+
+  // Recharger le profil si pas encore disponible
+  if (!userProfile && currentUser) await loadUserProfile();
+  const pseudo = userProfile?.pseudo || currentUser?.email?.split("@")[0] || "Mon profil";
+  title.textContent = pseudo;
 
   const { data: games } = await sb.from("games")
     .select("*").eq("user_id", currentUser.id).order("score",{ascending:false}).limit(50);
