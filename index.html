@@ -1258,7 +1258,7 @@ async function renderProfileModal() {
   if (!games || !games.length) {
     histList.innerHTML = `<div style="text-align:center;color:var(--dim);font-size:13px;padding:16px;">Aucune partie</div>`;
   } else {
-    histList.innerHTML = games.slice(0,20).map(g => {
+    histList.innerHTML = games.slice(0,20).map((g, i) => {
       const d = new Date(g.created_at);
       const date = d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
       const icon = DIFFICULTY.find(d=>d.label===g.level)?.icon || "🌙";
