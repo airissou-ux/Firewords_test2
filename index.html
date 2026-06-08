@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   /* Palette POP : primaires franches */
@@ -328,10 +329,184 @@ body{display:flex;flex-direction:column;align-items:center;}
   font-family:var(--font-title);font-size:17px;font-weight:900;letter-spacing:.06em;color:#fff;padding:11px;cursor:pointer;transition:all .2s;}
 .tuto-next:hover{filter:brightness(1.1);}
 .btn-help-splash-wrap{position:relative;z-index:1;}
+
+
+/* ══════════════════════════════════
+   AUTH SCREENS
+══════════════════════════════════ */
+#auth{background:var(--bg);padding:32px 20px;justify-content:center;align-items:center;min-height:100vh;}
+.auth-box{width:100%;max-width:360px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px 24px;}
+.auth-logo{display:flex;flex-direction:column;align-items:center;margin-bottom:24px;}
+.auth-tabs{display:flex;background:var(--surface2);border-radius:10px;padding:3px;margin-bottom:22px;}
+.auth-tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:700;border-radius:8px;cursor:pointer;transition:all .2s;color:var(--dim);}
+.auth-tab.active{background:var(--surface);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.auth-field{margin-bottom:14px;}
+.auth-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.auth-field input{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;
+  padding:12px 14px;font-family:var(--font-ui);font-size:15px;color:var(--text);outline:none;transition:border .2s;}
+.auth-field input:focus{border-color:var(--coral);}
+.auth-field input::placeholder{color:var(--dim);}
+.auth-btn{width:100%;padding:14px;border:none;border-radius:12px;margin-top:6px;
+  background:linear-gradient(135deg,var(--coral),var(--amber));
+  font-family:var(--font-title);font-size:18px;font-weight:900;color:#fff;
+  cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(255,71,87,.3);}
+.auth-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.auth-skip{display:block;text-align:center;margin-top:14px;font-size:12px;color:var(--dim);
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.auth-skip:hover{color:var(--text);}
+.auth-error{background:rgba(255,71,87,.15);border:1px solid rgba(255,71,87,.3);border-radius:8px;
+  padding:9px 12px;font-size:12px;color:var(--coral);margin-bottom:14px;display:none;}
+.auth-error.show{display:block;}
+
+/* ══════════════════════════════════
+   PROFILE BAR (header du jeu)
+══════════════════════════════════ */
+.profile-bar{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.profile-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--sky));
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;}
+.profile-pseudo{font-size:12px;font-weight:700;color:var(--dim);max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* ══════════════════════════════════
+   MODAL GÉNÉRIQUE
+══════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:300;display:flex;align-items:flex-end;justify-content:center;padding:0;}
+.modal-overlay.hidden{display:none;}
+.modal-sheet{width:100%;max-width:430px;background:var(--surface);border-radius:20px 20px 0 0;
+  padding:20px 20px 36px;max-height:90vh;overflow-y:auto;}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px;}
+.modal-title{font-family:var(--font-title);font-size:20px;font-weight:900;
+  background:linear-gradient(90deg,var(--coral),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;color:var(--dim);}
+
+/* ══════════════════════════════════
+   PROFIL / STATS
+══════════════════════════════════ */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;}
+.stat-val{font-family:var(--font-title);font-size:28px;font-weight:900;
+  background:linear-gradient(135deg,var(--coral),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.stat-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-top:4px;font-weight:700;}
+.history-list{display:flex;flex-direction:column;gap:8px;}
+.history-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;}
+.history-left{display:flex;flex-direction:column;gap:3px;}
+.history-score{font-family:var(--font-title);font-size:22px;font-weight:900;color:var(--amber);}
+.history-meta{font-size:11px;color:var(--dim);font-weight:600;}
+.history-right{text-align:right;}
+.history-level{font-size:18px;}
+.history-date{font-size:10px;color:var(--dim);margin-top:2px;}
+.logout-btn{width:100%;padding:12px;background:var(--surface2);border:1.5px solid rgba(255,71,87,.3);
+  border-radius:12px;color:var(--coral);font-size:13px;font-weight:700;cursor:pointer;margin-top:16px;transition:all .2s;}
+.logout-btn:hover{background:rgba(255,71,87,.1);}
+
+/* ══════════════════════════════════
+   POP DU JOUR
+══════════════════════════════════ */
+.daily-badge{display:flex;align-items:center;gap:6px;background:linear-gradient(90deg,rgba(255,71,87,.15),rgba(255,183,3,.15));
+  border:1px solid rgba(255,183,3,.3);border-radius:20px;padding:5px 12px;
+  font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.05em;cursor:pointer;}
+.daily-badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--coral);
+  animation:pulseDot 1.5s ease-in-out infinite;}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.7);}}
+
+.daily-header{text-align:center;margin-bottom:20px;}
+.daily-date{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.daily-title{font-family:var(--font-title);font-size:26px;font-weight:900;
+  background:linear-gradient(90deg,var(--coral),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.daily-desc{font-size:13px;color:rgba(240,240,255,.7);margin-top:6px;line-height:1.5;}
+.daily-scores{margin-top:16px;}
+.daily-scores-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;font-weight:700;}
+.leaderboard-item{display:flex;align-items:center;gap:12px;padding:10px 12px;
+  background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-bottom:6px;}
+.lb-rank{font-family:var(--font-title);font-size:18px;font-weight:900;color:var(--dim);width:24px;text-align:center;}
+.lb-rank.gold{color:#FFD700;}
+.lb-rank.silver{color:#C0C0C0;}
+.lb-rank.bronze{color:#CD7F32;}
+.lb-pseudo{flex:1;font-size:13px;font-weight:700;color:var(--text);}
+.lb-score{font-family:var(--font-title);font-size:18px;font-weight:900;color:var(--amber);}
+.lb-me{border-color:rgba(255,183,3,.4);background:rgba(255,183,3,.05);}
+.daily-played{text-align:center;padding:20px;color:var(--dim);font-size:13px;}
+.daily-played strong{color:var(--amber);}
+.daily-start-btn{width:100%;padding:14px;border:none;border-radius:12px;margin-top:14px;
+  background:linear-gradient(135deg,var(--coral),var(--amber));
+  font-family:var(--font-title);font-size:18px;font-weight:900;color:#fff;cursor:pointer;transition:all .2s;}
+
+/* ══════════════════════════════════
+   MODE DUEL
+══════════════════════════════════ */
+.duel-options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.duel-option{background:var(--surface2);border:1.5px solid var(--border);border-radius:14px;
+  padding:16px;cursor:pointer;transition:all .2s;text-align:left;}
+.duel-option:hover{border-color:var(--sky);background:rgba(0,180,216,.06);}
+.duel-option-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.duel-option-desc{font-size:12px;color:var(--dim);}
+.duel-code-display{background:var(--surface2);border:2px solid var(--sky);border-radius:14px;
+  padding:20px;text-align:center;margin-bottom:14px;}
+.duel-code{font-family:var(--font-title);font-size:40px;font-weight:900;letter-spacing:.3em;
+  color:var(--sky);text-shadow:0 0 20px rgba(0,180,216,.4);}
+.duel-code-hint{font-size:12px;color:var(--dim);margin-top:6px;}
+.duel-code-input{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;
+  padding:14px;font-family:var(--font-title);font-size:28px;font-weight:900;letter-spacing:.3em;
+  color:var(--sky);text-align:center;outline:none;text-transform:uppercase;transition:border .2s;}
+.duel-code-input:focus{border-color:var(--sky);}
+.duel-join-btn{width:100%;padding:13px;border:none;border-radius:10px;margin-top:10px;
+  background:linear-gradient(135deg,var(--sky),var(--violet));
+  font-family:var(--font-title);font-size:17px;font-weight:900;color:#fff;cursor:pointer;}
+.duel-waiting{text-align:center;padding:20px 0;}
+.duel-waiting-icon{font-size:40px;animation:spin 3s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.duel-waiting-text{font-size:13px;color:var(--dim);margin-top:10px;}
+.duel-result{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:14px;}
+.duel-result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;}
+.duel-result-row:not(:last-child){border-bottom:1px solid var(--border);}
+.duel-player{font-size:13px;font-weight:700;}
+.duel-player-score{font-family:var(--font-title);font-size:22px;font-weight:900;color:var(--amber);}
+.duel-winner{color:var(--lime);}
+
+/* ══════════════════════════════════
+   PARTAGE
+══════════════════════════════════ */
+.share-preview{background:linear-gradient(135deg,#0D0D1A,#1A0A2E);border-radius:16px;
+  padding:24px;text-align:center;margin-bottom:16px;border:1px solid var(--border);}
+.share-preview-score{font-family:var(--font-title);font-size:56px;font-weight:900;
+  background:linear-gradient(135deg,var(--coral),var(--amber),var(--lime));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.share-preview-meta{font-size:12px;color:var(--dim);margin-top:6px;letter-spacing:.1em;}
+.share-btns{display:flex;flex-direction:column;gap:8px;}
+.share-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;
+  background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;
+  font-size:14px;font-weight:700;color:var(--text);cursor:pointer;transition:all .2s;}
+.share-btn:hover{border-color:var(--sky);color:var(--sky);}
+.share-btn-icon{font-size:20px;width:28px;text-align:center;}
+
+/* ══════════════════════════════════
+   BOTTOM NAV (remplace bottom-bar)
+══════════════════════════════════ */
+.bottom-nav{width:100%;display:flex;align-items:center;justify-content:space-around;
+  padding:8px 0 4px;border-top:1px solid var(--border);background:var(--bg);}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;cursor:pointer;padding:4px 12px;transition:all .2s;min-width:50px;}
+.nav-btn .nav-icon{font-size:20px;line-height:1;}
+.nav-btn .nav-lbl{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);}
+.nav-btn.active .nav-lbl{color:var(--coral);}
+.nav-btn.active .nav-icon{filter:drop-shadow(0 0 6px var(--coral));}
+.prog-dots{display:flex;gap:3px;}
+.prog-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s;}
+.prog-dot.on{background:var(--coral);box-shadow:0 0 6px var(--coral);}
+
+/* Indicateur duel actif */
+.duel-indicator{position:absolute;top:-3px;right:-3px;width:10px;height:10px;
+  border-radius:50%;background:var(--lime);border:2px solid var(--bg);display:none;}
+.duel-indicator.active{display:block;animation:pulseDot 1s infinite;}
+
 </style>
 </head>
 <body>
-
 <div id="loading">
   <div class="load-logo-mini">
     <span style="background:linear-gradient(135deg,#FF4757,#FF6B9D)">P</span>
@@ -391,14 +566,19 @@ body{display:flex;flex-direction:column;align-items:center;}
       <button class="btn-validate" id="btn-validate" disabled>VALIDER</button>
     </div>
   </div>
-  <div class="bottom-bar">
-    <div class="diff-indicator">
-      <span id="diff-icon">🐢</span>
-      <span id="diff-name">Cool</span>
+  <div class="bottom-bar-info" style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-top:1px solid var(--border);margin-top:2px;">
+    <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--dim);font-weight:600;">
+      <span id="diff-icon">🌙</span><span id="diff-name">Moon</span>
     </div>
     <div class="prog-dots" id="prog-dots"></div>
     <button class="btn-help" id="btn-help">?</button>
-    <button class="btn-menu" id="btn-menu">⚙ Menu</button>
+  </div>
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="nav-play" onclick="navTo('play')"><span class="nav-icon">🎮</span><span class="nav-lbl">Jouer</span></button>
+    <button class="nav-btn" id="nav-daily" onclick="openDailyModal()"><span class="nav-icon">⭐</span><span class="nav-lbl">Du jour</span></button>
+    <button class="nav-btn" id="nav-duel" onclick="openDuelModal()" style="position:relative;"><span class="nav-icon">⚔️</span><span class="nav-lbl">Duel</span><span class="duel-indicator" id="duel-indicator"></span></button>
+    <button class="nav-btn" id="nav-share" onclick="openShareModal()"><span class="nav-icon">📤</span><span class="nav-lbl">Partager</span></button>
+    <button class="nav-btn" id="nav-profile" onclick="openModal('modal-profile')"><span class="nav-icon" id="nav-profile-icon">👤</span><span class="nav-lbl">Profil</span></button>
   </div>
 </div>
 
@@ -466,7 +646,481 @@ body{display:flex;flex-direction:column;align-items:center;}
   </div>
 </div>
 
+<!-- AUTH -->
+<div class="screen" id="auth">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div style="display:flex;gap:8px;align-items:flex-end;justify-content:center;padding-bottom:4px;margin-bottom:14px;">
+        <span style="width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-weight:900;font-size:20px;color:#fff;background:linear-gradient(135deg,#FF4757,#FF6B9D);transform:translateY(12px) rotate(-22deg);">P</span>
+        <span style="width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-weight:900;font-size:20px;color:#fff;background:linear-gradient(135deg,#FFB703,#FF8C00);">O</span>
+        <span style="width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-weight:900;font-size:20px;color:#fff;background:linear-gradient(135deg,#06D6A0,#00B4D8);transform:translateY(12px) rotate(22deg);">P</span>
+      </div>
+      <div style="font-family:var(--font-title);font-weight:900;font-size:16px;letter-spacing:.4em;text-align:center;background:linear-gradient(90deg,#FF4757,#FFB703,#06D6A0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;">LETTERS</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Connexion</div>
+      <div class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Inscription</div>
+    </div>
+    <div class="auth-error" id="auth-error"></div>
+    <div class="auth-field" id="field-pseudo" style="display:none">
+      <label>Pseudo</label>
+      <input type="text" id="input-pseudo" placeholder="Ton pseudo de joueur" maxlength="20" autocomplete="off"/>
+    </div>
+    <div class="auth-field">
+      <label>Email</label>
+      <input type="email" id="input-email" placeholder="ton@email.com" autocomplete="email"/>
+    </div>
+    <div class="auth-field">
+      <label>Mot de passe</label>
+      <input type="password" id="input-password" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <button class="auth-btn" id="auth-submit-btn" onclick="handleAuth()">SE CONNECTER</button>
+    <span class="auth-skip" onclick="skipAuth()">Jouer sans compte →</span>
+  </div>
+</div>
+
+<!-- MODAL PROFIL -->
+<div class="modal-overlay hidden" id="modal-profile">
+  <div class="modal-sheet" style="position:relative;">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('modal-profile')">✕</button>
+    <div class="modal-title" id="profile-title">Mon profil</div>
+    <div class="stats-grid" id="stats-grid"></div>
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;font-weight:700;">Dernières parties</div>
+    <div class="history-list" id="history-list"></div>
+    <button class="logout-btn" onclick="handleLogout()">Se déconnecter</button>
+  </div>
+</div>
+
+<!-- MODAL POP DU JOUR -->
+<div class="modal-overlay hidden" id="modal-daily">
+  <div class="modal-sheet" style="position:relative;">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('modal-daily')">✕</button>
+    <div class="daily-header">
+      <div class="daily-date" id="daily-date"></div>
+      <div class="daily-title">⭐ POP du jour</div>
+      <div class="daily-desc">Un tirage unique pour tous.<br>Une seule tentative — fais le meilleur score !</div>
+    </div>
+    <div id="daily-content"></div>
+  </div>
+</div>
+
+<!-- MODAL DUEL -->
+<div class="modal-overlay hidden" id="modal-duel">
+  <div class="modal-sheet" style="position:relative;">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('modal-duel')">✕</button>
+    <div class="modal-title">⚔️ Mode Duel</div>
+    <div id="duel-content"></div>
+  </div>
+</div>
+
+<!-- MODAL PARTAGE -->
+<div class="modal-overlay hidden" id="modal-share">
+  <div class="modal-sheet" style="position:relative;">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('modal-share')">✕</button>
+    <div class="modal-title">Partager</div>
+    <div class="share-preview" id="share-preview"></div>
+    <div class="share-btns" id="share-btns"></div>
+  </div>
+</div>
+
 <script>
+
+// ═══════════════════════════════════════════════
+// SUPABASE CONFIG
+// ═══════════════════════════════════════════════
+const SUPABASE_URL = "https://jpplgrntcihsptjthita.supabase.co";
+const SUPABASE_KEY = "sb_publishable_2_dQaE-ZYfW2TemQEi6tcQ_WhKMedAT";
+
+let currentUser = null;
+let userProfile = null;
+let isDailyMode = false;
+let isDuelMode  = false;
+let duelId      = null;
+let duelChannel = null;
+let lastGameResult = null;
+
+// Chargement SDK Supabase
+const _sbScript = document.createElement("script");
+_sbScript.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js";
+_sbScript.onload = () => {
+  window.sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  initApp();
+};
+document.head.appendChild(_sbScript);
+
+async function initApp() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    await loadUserProfile();
+    updateProfileUI();
+    buildSplash();
+    loadDictionary();
+  } else {
+    showScreen("auth");
+    loadDictionary();
+  }
+}
+
+// ── AUTH ──
+let authMode = "login";
+
+function switchAuthTab(mode) {
+  authMode = mode;
+  document.querySelectorAll(".auth-tab").forEach(t => t.classList.remove("active"));
+  document.getElementById("tab-" + mode).classList.add("active");
+  document.getElementById("field-pseudo").style.display = mode === "signup" ? "block" : "none";
+  document.getElementById("auth-submit-btn").textContent = mode === "login" ? "SE CONNECTER" : "CRÉER MON COMPTE";
+  hideAuthError();
+}
+
+function showAuthError(msg) {
+  const el = document.getElementById("auth-error");
+  el.textContent = msg; el.classList.add("show");
+}
+function hideAuthError() {
+  document.getElementById("auth-error").classList.remove("show");
+}
+
+async function handleAuth() {
+  const email    = document.getElementById("input-email").value.trim();
+  const password = document.getElementById("input-password").value;
+  const pseudo   = document.getElementById("input-pseudo").value.trim();
+  hideAuthError();
+  if (!email || !password) { showAuthError("Email et mot de passe requis."); return; }
+  const btn = document.getElementById("auth-submit-btn");
+  btn.textContent = "…"; btn.disabled = true;
+  try {
+    if (authMode === "signup") {
+      if (!pseudo) { showAuthError("Choisis un pseudo."); return; }
+      const { data, error } = await sb.auth.signUp({ email, password });
+      if (error) throw error;
+      currentUser = data.user;
+      await sb.from("profiles").insert({ id: currentUser.id, pseudo, total_games:0, best_score:0 });
+      await loadUserProfile();
+    } else {
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      currentUser = data.user;
+      await loadUserProfile();
+    }
+    updateProfileUI();
+    buildSplash();
+    showScreen("splash");
+  } catch(err) {
+    const msg = err.message.includes("Invalid") ? "Email ou mot de passe incorrect."
+              : err.message.includes("already") ? "Email déjà utilisé."
+              : err.message;
+    showAuthError(msg);
+  } finally {
+    btn.textContent = authMode === "login" ? "SE CONNECTER" : "CRÉER MON COMPTE";
+    btn.disabled = false;
+  }
+}
+
+async function handleLogout() {
+  await sb.auth.signOut();
+  currentUser = null; userProfile = null;
+  closeModal("modal-profile");
+  showScreen("auth");
+}
+
+function skipAuth() { buildSplash(); showScreen("splash"); }
+
+async function loadUserProfile() {
+  if (!currentUser) return;
+  const { data } = await sb.from("profiles").select("*").eq("id", currentUser.id).single();
+  userProfile = data;
+}
+
+function updateProfileUI() {
+  if (!userProfile) return;
+  const initial = (userProfile.pseudo || "?")[0].toUpperCase();
+  const el = document.getElementById("nav-profile-icon");
+  if (el) el.textContent = initial;
+}
+
+// ── MODALS ──
+function openModal(id) {
+  document.getElementById(id).classList.remove("hidden");
+  if (id === "modal-profile") renderProfileModal();
+}
+function closeModal(id) {
+  document.getElementById(id).classList.add("hidden");
+}
+
+// ── PROFIL ──
+async function renderProfileModal() {
+  const statsGrid = document.getElementById("stats-grid");
+  const histList  = document.getElementById("history-list");
+  const logoutBtn = document.querySelector(".logout-btn");
+  const title     = document.getElementById("profile-title");
+
+  if (!currentUser) {
+    title.textContent = "Profil";
+    statsGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--dim);font-size:13px;">
+      Connecte-toi pour sauvegarder tes scores !<br><br>
+      <button class="auth-btn" style="font-size:14px;padding:11px;" onclick="closeModal('modal-profile');showScreen('auth')">Se connecter</button>
+    </div>`;
+    histList.innerHTML = "";
+    if (logoutBtn) logoutBtn.style.display = "none";
+    return;
+  }
+  if (logoutBtn) logoutBtn.style.display = "block";
+  title.textContent = userProfile?.pseudo || "Mon profil";
+
+  const { data: games } = await sb.from("games")
+    .select("*").eq("user_id", currentUser.id).order("created_at",{ascending:false}).limit(50);
+
+  const total = games?.length || 0;
+  const best  = games ? Math.max(0,...games.map(g=>g.score)) : 0;
+  const avg   = total ? Math.round(games.reduce((s,g)=>s+g.score,0)/total) : 0;
+  const words = games ? games.reduce((s,g)=>s+(g.word_count||0),0) : 0;
+
+  statsGrid.innerHTML = `
+    <div class="stat-card"><div class="stat-val">${total}</div><div class="stat-lbl">Parties</div></div>
+    <div class="stat-card"><div class="stat-val">${best}</div><div class="stat-lbl">Meilleur score</div></div>
+    <div class="stat-card"><div class="stat-val">${avg}</div><div class="stat-lbl">Score moyen</div></div>
+    <div class="stat-card"><div class="stat-val">${words}</div><div class="stat-lbl">Mots trouvés</div></div>`;
+
+  if (!games || !games.length) {
+    histList.innerHTML = `<div style="text-align:center;color:var(--dim);font-size:13px;padding:16px;">Aucune partie</div>`;
+    return;
+  }
+  histList.innerHTML = games.slice(0,10).map(g => {
+    const d = new Date(g.created_at);
+    const date = d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
+    const icon = DIFFICULTY.find(d=>d.label===g.level)?.icon || "🌙";
+    return `<div class="history-item">
+      <div class="history-left">
+        <div class="history-score">${g.score} pts</div>
+        <div class="history-meta">${g.word_count||0} mot${(g.word_count||0)>1?"s":""} · ${g.level||""}</div>
+      </div>
+      <div class="history-right"><div class="history-level">${icon}</div><div class="history-date">${date}</div></div>
+    </div>`;
+  }).join("");
+}
+
+async function saveGame(score, wordList, level) {
+  if (!currentUser) return;
+  await sb.from("games").insert({
+    user_id: currentUser.id, score, word_count: wordList.length,
+    words: wordList, level, is_daily: isDailyMode,
+    created_at: new Date().toISOString()
+  });
+  if (userProfile && score > (userProfile.best_score||0)) {
+    await sb.from("profiles").update({best_score:score}).eq("id",currentUser.id);
+    userProfile.best_score = score;
+  }
+}
+
+// ── POP DU JOUR ──
+function getDailyDate() {
+  const n = new Date();
+  return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}-${String(n.getDate()).padStart(2,"0")}`;
+}
+function getDailySeed() {
+  const date = getDailyDate();
+  let h = 0;
+  for (let i=0;i<date.length;i++){h=((h<<5)-h)+date.charCodeAt(i);h|=0;}
+  return Math.abs(h);
+}
+function seededShuffle(arr, seed) {
+  const a=[...arr]; let s=seed;
+  for(let i=a.length-1;i>0;i--){
+    s=(s*1664525+1013904223)&0xFFFFFFFF;
+    const j=Math.abs(s)%(i+1);
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+async function openDailyModal() {
+  openModal("modal-daily");
+  const dateStr = getDailyDate();
+  const d = new Date();
+  document.getElementById("daily-date").textContent =
+    d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"}).toUpperCase();
+  const content = document.getElementById("daily-content");
+  content.innerHTML = `<div style="text-align:center;color:var(--dim);padding:20px;">Chargement…</div>`;
+
+  let alreadyPlayed = false; let myScore = null;
+  if (currentUser) {
+    const {data} = await sb.from("games").select("score").eq("user_id",currentUser.id)
+      .eq("is_daily",true).gte("created_at",dateStr).maybeSingle();
+    if (data) { alreadyPlayed=true; myScore=data.score; }
+  }
+
+  const {data:scores} = await sb.from("games")
+    .select("score, user_id, profiles(pseudo)").eq("is_daily",true)
+    .gte("created_at",dateStr).order("score",{ascending:false}).limit(10);
+
+  const rankColors=["gold","silver","bronze"];
+  const lb = scores||[];
+
+  content.innerHTML = (alreadyPlayed
+    ? `<div class="daily-played">Ton score : <strong>${myScore} pts</strong><br><span style="font-size:12px;margin-top:4px;display:block;">Reviens demain !</span></div>`
+    : `<button class="daily-start-btn" onclick="startDailyGame();closeModal('modal-daily')">🚀 JOUER LE POP DU JOUR</button>`)
+    + (lb.length ? `<div class="daily-scores"><div class="daily-scores-title">🏆 Classement du jour</div>
+      ${lb.map((s,i)=>`<div class="leaderboard-item ${currentUser&&s.user_id===currentUser.id?"lb-me":""}">
+        <div class="lb-rank ${rankColors[i]||""}">${i+1}</div>
+        <div class="lb-pseudo">${s.profiles?.pseudo||"Anonyme"}${currentUser&&s.user_id===currentUser.id?" (toi)":""}</div>
+        <div class="lb-score">${s.score}</div></div>`).join("")}
+      </div>` : "");
+}
+
+function startDailyGame() {
+  isDailyMode=true; isDuelMode=false;
+  state.deck = seededShuffle([...LETTER_POOL], getDailySeed());
+  startGame();
+}
+
+// ── DUEL ──
+function openDuelModal() { openModal("modal-duel"); renderDuelHome(); }
+
+function renderDuelHome() {
+  document.getElementById("duel-content").innerHTML = `
+    <div class="duel-options">
+      <div class="duel-option" onclick="createDuel()">
+        <div class="duel-option-title">⚔️ Créer un duel</div>
+        <div class="duel-option-desc">Génère un code à partager avec ton adversaire</div>
+      </div>
+      <div class="duel-option" onclick="renderJoinDuel()">
+        <div class="duel-option-title">🎯 Rejoindre un duel</div>
+        <div class="duel-option-desc">Entre le code reçu de ton adversaire</div>
+      </div>
+    </div>`;
+}
+
+function genDuelCode() {
+  const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s="";
+  for(let i=0;i<6;i++) s+=c[Math.floor(Math.random()*c.length)];
+  return s;
+}
+
+async function createDuel() {
+  if (!currentUser) { showToast("Connecte-toi pour créer un duel"); return; }
+  const code = genDuelCode();
+  const seed = Math.floor(Math.random()*999999);
+  const pseudo = userProfile?.pseudo||"Anonyme";
+  const {data,error} = await sb.from("duels").insert({
+    code, seed, player1_id:currentUser.id, player1_pseudo:pseudo, status:"waiting",
+    created_at:new Date().toISOString()
+  }).select().single();
+  if (error) { showToast("Erreur création duel"); return; }
+  duelId = data.id;
+
+  document.getElementById("duel-content").innerHTML = `
+    <div class="duel-code-display">
+      <div style="font-size:12px;color:var(--dim);margin-bottom:8px;letter-spacing:.1em;">TON CODE DUEL</div>
+      <div class="duel-code">${code}</div>
+      <div class="duel-code-hint">Partage ce code avec ton adversaire</div>
+    </div>
+    <button class="duel-join-btn" onclick="shareDuelCode('${code}')">📤 Partager le code</button>
+    <div class="duel-waiting"><div class="duel-waiting-icon">⏳</div>
+    <div class="duel-waiting-text">En attente de l'adversaire…</div></div>`;
+
+  duelChannel = sb.channel("duel:"+data.id)
+    .on("postgres_changes",{event:"UPDATE",schema:"public",table:"duels",filter:"id=eq."+data.id},
+      p => { if(p.new.status==="ready"){closeModal("modal-duel");startDuelGame(seed,data.id);} }
+    ).subscribe();
+}
+
+function renderJoinDuel() {
+  document.getElementById("duel-content").innerHTML = `
+    <input class="duel-code-input" id="join-code-input" placeholder="XXXXXX" maxlength="6"/>
+    <button class="duel-join-btn" onclick="joinDuel()">REJOINDRE →</button>`;
+}
+
+async function joinDuel() {
+  const code = (document.getElementById("join-code-input").value||"").trim().toUpperCase();
+  if (code.length<6) { showToast("Code invalide"); return; }
+  const {data,error} = await sb.from("duels").select("*").eq("code",code).eq("status","waiting").single();
+  if (error||!data) { showToast("Code introuvable"); return; }
+  const pseudo = userProfile?.pseudo||"Anonyme";
+  await sb.from("duels").update({
+    player2_id:currentUser?.id||null, player2_pseudo:pseudo, status:"ready"
+  }).eq("id",data.id);
+  closeModal("modal-duel");
+  startDuelGame(data.seed, data.id);
+}
+
+function startDuelGame(seed, id) {
+  isDuelMode=true; isDailyMode=false; duelId=id;
+  state.deck = seededShuffle([...LETTER_POOL], seed);
+  startGame();
+}
+
+async function saveDuelScore(score) {
+  if (!duelId||!currentUser) return;
+  const {data} = await sb.from("duels").select("player1_id").eq("id",duelId).single();
+  const isP1 = data?.player1_id===currentUser.id;
+  await sb.from("duels").update({
+    [isP1?"player1_score":"player2_score"]:score,
+    [isP1?"player1_done":"player2_done"]:true,
+  }).eq("id",duelId);
+}
+
+function shareDuelCode(code) {
+  const text = `Je te défie sur POP LETTERS ! Code : ${code} 🎮`;
+  if(navigator.share){navigator.share({title:"POP LETTERS Duel",text});}
+  else{navigator.clipboard.writeText(text);showToast("Code copié !");}
+}
+
+// ── PARTAGE ──
+function openShareModal() { openModal("modal-share"); renderShareModal(); }
+
+function renderShareModal() {
+  const score = lastGameResult?.score || state.score || 0;
+  const level = lastGameResult?.level || DIFFICULTY[state.diffIdx]?.label || "";
+  const words = lastGameResult?.wordCount || state.wordList?.length || 0;
+  const icon  = DIFFICULTY.find(d=>d.label===level)?.icon||"🌙";
+  const dateStr = new Date().toLocaleDateString("fr-FR",{day:"numeric",month:"long"});
+  const modeTag = isDailyMode?"⭐ POP du jour":isDuelMode?"⚔️ Duel":level;
+  const url = "https://airissou-ux.github.io/Firewords_test2/";
+
+  document.getElementById("share-preview").innerHTML = `
+    <div style="display:flex;gap:5px;justify-content:center;align-items:flex-end;margin-bottom:10px;">
+      <span style="width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff;background:linear-gradient(135deg,#FF4757,#FF6B9D);transform:translateY(4px) rotate(-22deg);">P</span>
+      <span style="width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff;background:linear-gradient(135deg,#FFB703,#FF8C00);">O</span>
+      <span style="width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff;background:linear-gradient(135deg,#06D6A0,#00B4D8);transform:translateY(4px) rotate(22deg);">P</span>
+    </div>
+    <div style="font-size:10px;letter-spacing:.25em;color:rgba(255,255,255,.4);margin-bottom:8px;">${modeTag} · ${dateStr}</div>
+    <div class="share-preview-score">${score}</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;">pts · ${words} mot${words>1?"s":""} · ${icon} ${level}</div>`;
+
+  const txt = encodeURIComponent(`🎮 POP LETTERS ${isDailyMode?"(POP du jour)":""}\n${score} pts · ${words} mots · ${icon} ${level}\n${dateStr}\n\n👉 ${url}`);
+
+  document.getElementById("share-btns").innerHTML = `
+    <button class="share-btn" onclick="shareNative('${txt}')"><span class="share-btn-icon">📤</span>Partager via…</button>
+    <button class="share-btn" onclick="window.open('https://wa.me/?text=${txt}','_blank')"><span class="share-btn-icon">💬</span>WhatsApp</button>
+    <button class="share-btn" onclick="window.open('https://twitter.com/intent/tweet?text=${txt}','_blank')"><span class="share-btn-icon">𝕏</span>X / Twitter</button>
+    <button class="share-btn" onclick="navigator.clipboard.writeText(decodeURIComponent('${txt}'));showToast('Copié !')"><span class="share-btn-icon">📋</span>Copier</button>`;
+}
+
+function shareNative(encodedText) {
+  if(navigator.share){navigator.share({title:"POP LETTERS",text:decodeURIComponent(encodedText),url:"https://airissou-ux.github.io/Firewords_test2/"});}
+  else{navigator.clipboard.writeText(decodeURIComponent(encodedText));showToast("Copié !");}
+}
+
+function navTo(tab) {
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById("nav-"+tab)?.classList.add("active");
+}
+
+
+// Fermer modals sur overlay click
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".modal-overlay").forEach(el => {
+    el.addEventListener("click", e => { if(e.target===el) el.classList.add("hidden"); });
+  });
+});
+
+
 const DICT_URL = "https://raw.githubusercontent.com/lorenbrichter/Words/master/Words/fr.txt";
 
 const LETTER_POOL = [
@@ -928,6 +1582,11 @@ function triggerGameOver(reason) {
   state.screen = "gameover";
   renderGameOver(reason);
   showScreen("gameover");
+  // Sauvegarder la partie
+  const level = DIFFICULTY[state.diffIdx].label;
+  lastGameResult = { score: state.score, level, wordCount: state.wordList.length };
+  if (typeof saveGame === "function") saveGame(state.score, state.wordList, level);
+  if (typeof saveDuelScore === "function" && isDuelMode) saveDuelScore(state.score);
 }
 
 function handleCellClick(id) {
@@ -1295,8 +1954,7 @@ document.getElementById("btn-help").addEventListener("click", () => showTutorial
 document.getElementById("btn-help-splash").addEventListener("click", () => showTutorial(0));
 document.getElementById("btn-help-splash").addEventListener("click", () => showTutorial(0));
 
-buildSplash();
-loadDictionary();
+// init via initApp() after Supabase loads
 </script>
 </body>
 </html>
