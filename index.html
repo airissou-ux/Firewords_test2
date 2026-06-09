@@ -1126,13 +1126,18 @@ function skipAuth() { buildSplash(); showScreen("splash"); }
 async function loadUserProfile() {
   if (!currentUser) return;
   const {data,error} = await sb.from("profiles").select("*").eq("id",currentUser.id).maybeSingle();
-  if (error) { console.error("loadUserProfile:",error.message); return; }
+  if (error) {
+    alert("Erreur profil: " + error.message);
+    return;
+  }
   if (data) {
     userProfile = data;
+    alert("Profil chargé: pseudo=" + data.pseudo + " emoji=" + data.emoji);
   } else {
-    // Créer un profil vide si absent
+    alert("Profil ABSENT en base pour " + currentUser.id);
     const blank = {id:currentUser.id, emoji:"🎯", best_score:0, total_games:0};
-    await sb.from("profiles").upsert(blank,{onConflict:"id"});
+    const {error:ue} = await sb.from("profiles").upsert(blank,{onConflict:"id"});
+    if(ue) alert("Upsert erreur: " + ue.message);
     userProfile = blank;
   }
 }
