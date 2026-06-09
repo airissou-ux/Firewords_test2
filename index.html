@@ -1113,34 +1113,66 @@ async function handleAuth() {
   if (!email || !password) { showAuthError("Email et mot de passe requis."); return; }
   const btn = document.getElementById("auth-submit-btn");
   btn.textContent = "…"; btn.disabled = true;
+
   try {
     if (authMode === "signup") {
-      if (!pseudo || pseudo.length < 3) { showAuthError("Choisis un pseudo (3 caractères min)."); return; }
-      // Vérifier dispo pseudo
-      const { data: existing } = await sb.from("profiles").select("id").eq("pseudo", pseudo).maybeSingle();
+
+      // Validation pseudo
+      if (!pseudo || pseudo.length < 3) {
+        showAuthError("Choisis un pseudo (3 caractères min.)");
+        return;
+      }
+
+      // Vérifier disponibilité pseudo
+      const { data: existing } = await sb.from("profiles")
+        .select("id").eq("pseudo", pseudo).maybeSingle();
       if (existing) { showAuthError("Ce pseudo est déjà pris."); return; }
-      const { data, error } = await sb.auth.signUp({ email, password });
-      if (error) throw error;
-      currentUser = data.user;
-      // Upsert pour éviter les doublons si le profil existe déjà partiellement
-      const { error: profileError } = await sb.from("profiles").upsert({
-        id: currentUser.id, pseudo, emoji: selectedEmoji, best_score:0, total_games:0
-      }, { onConflict: "id" });
-      if (profileError) console.error("Profile creation error:", profileError);
+
+      // Créer le compte
+      const { data: signupData, error: signupError } = await sb.auth.signUp({ email, password });
+      if (signupError) throw signupError;
+
+      // Supabase peut renvoyer user sans session si email non confirmé
+      // On récupère le user dans tous les cas
+      currentUser = signupData.user || signupData.session?.user;
+      if (!currentUser) throw new Error("Création du compte échouée. Réessaie.");
+
+      // Créer le profil — on réessaie jusqu'à 3 fois si nécessaire
+      let profileOk = false;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        if (attempt > 0) await new Promise(r => setTimeout(r, 500 * attempt));
+        const { error: pe } = await sb.from("profiles").upsert({
+          id: currentUser.id,
+          pseudo,
+          emoji: selectedEmoji || "🎯",
+          best_score: 0,
+          total_games: 0
+        }, { onConflict: "id" });
+        if (!pe) { profileOk = true; break; }
+        console.warn(`Profile upsert attempt ${attempt+1} failed:`, pe.message);
+      }
+      if (!profileOk) throw new Error("Profil non créé. Vérifie ta connexion et réessaie.");
+
       await loadUserProfile();
+
     } else {
-      const { data, error } = await sb.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      currentUser = data.user;
+      // Connexion
+      const { data: loginData, error: loginError } = await sb.auth.signInWithPassword({ email, password });
+      if (loginError) throw loginError;
+      currentUser = loginData.user;
       await loadUserProfile();
     }
+
     updateProfileUI();
     buildSplash();
     showScreen("splash");
+
   } catch(err) {
-    const msg = err.message.includes("Invalid") ? "Email ou mot de passe incorrect."
-              : err.message.includes("already") ? "Email déjà utilisé."
-              : err.message;
+    console.error("Auth error:", err);
+    const msg = (err.message||"").includes("Invalid")   ? "Email ou mot de passe incorrect."
+              : (err.message||"").includes("already")   ? "Cet email est déjà utilisé."
+              : (err.message||"").includes("Password")  ? "Mot de passe trop court (6 caractères min.)."
+              : err.message || "Erreur inconnue.";
     showAuthError(msg);
   } finally {
     btn.textContent = authMode === "login" ? "SE CONNECTER" : "CRÉER MON COMPTE";
