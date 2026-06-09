@@ -1077,19 +1077,14 @@ async function handleAuth() {
       if (se) throw se;
       currentUser = sd.user;
       if (!currentUser) throw new Error("Compte non créé. Réessaie.");
-      // Créer le profil avec retry
-      let ok=false;
-      for (let i=0;i<3;i++) {
-        if (i>0) await new Promise(r=>setTimeout(r,600));
-        const {error:pe} = await sb.from("profiles").upsert(
-          {id:currentUser.id, pseudo, emoji:selectedEmoji||"🎯", best_score:0, total_games:0},
-          {onConflict:"id"}
-        );
-        if (!pe) {ok=true; break;}
-        console.warn("Profile upsert attempt",i+1,"failed:",pe.message);
-      }
-      if (!ok) throw new Error("Profil non créé. Vérifie ta connexion.");
-      await loadUserProfile();
+      // Créer le profil
+      const {data:pd, error:pe} = await sb.from("profiles").upsert(
+        {id:currentUser.id, pseudo, emoji:selectedEmoji||"🎯", best_score:0, total_games:0},
+        {onConflict:"id"}
+      ).select().maybeSingle();
+      if (pe) { alert("Erreur profil: "+pe.message); throw pe; }
+      alert("Profil créé: pseudo="+pd?.pseudo+" emoji="+pd?.emoji);
+      userProfile = pd || {id:currentUser.id, pseudo, emoji:selectedEmoji||"🎯"};
     } else {
       const {data:ld, error:le} = await sb.auth.signInWithPassword({email,password});
       if (le) throw le;
