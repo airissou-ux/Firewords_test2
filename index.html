@@ -6,6 +6,7 @@
 <title>POP LETTERS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 
 
@@ -999,14 +1000,9 @@ let duelChannel = null;
 let lastGameResult = null;
 const gameDetailStore = {}; // stockage temporaire des parties pour le détail
 
-// Chargement SDK Supabase
-const _sbScript = document.createElement("script");
-_sbScript.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js";
-_sbScript.onload = () => {
-  window.sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  initApp();
-};
-document.head.appendChild(_sbScript);
+// Init Supabase (SDK chargé en <head>)
+window.sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+document.addEventListener("DOMContentLoaded", initApp);
 
 async function initApp() {
   loadDictionary();
