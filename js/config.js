@@ -32,4 +32,4 @@ async function initApp() {
 }
 
 
-const DICT_URL = "https://raw.githubusercontent.com/lorenbrichter/Words/master/Words/fr.txt";
+const DICT_URL = "dico-fr.txt";
