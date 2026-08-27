@@ -309,7 +309,7 @@ async function lookupDuel() {
 
   // Choisir son niveau
   const levelOptions = DIFFICULTY.map((d,i) =>
-    `<div class="duel-level-opt" data-idx="${i}" onclick="selectGuestLevel(${i},${data.id},'${data.code}',${data.seed})">
+    `<div class="duel-level-opt" data-idx="${i}" onclick="selectGuestLevel(${i},'${data.id}','${data.code}',${data.seed})">
       <span class="duel-level-icon">${d.icon}</span>
       <span class="duel-level-name">${d.label}</span>
       <span class="duel-level-speed">1 carte / ${d.ms/1000}s</span>
