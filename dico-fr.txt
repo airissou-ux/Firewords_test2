@@ -85106,6 +85106,7 @@ bridure
 bridures
 briee
 briees
+brief
 briefa
 briefai
 briefaient
@@ -85145,6 +85146,7 @@ briefing
 briefings
 briefions
 briefons
+briefs
 brient
 brier
 briera
@@ -217504,6 +217506,7 @@ desitalianisions
 desitalianisons
 deskman
 deskmen
+desks
 desman
 desmans
 desmine
@@ -292509,6 +292512,7 @@ eurasienne
 eurasiennes
 eurasiens
 eureka
+eurekas
 eurelien
 eurelienne
 eureliennes
@@ -380950,6 +380954,7 @@ kabyles
 kacha
 kachas
 kache
+kacher
 kaches
 kachkaval
 kachkavals
@@ -380970,6 +380975,8 @@ kafkaiennes
 kafkaiens
 kafkeen
 kafkien
+kaftan
+kaftans
 kagan
 kagans
 kagou
@@ -382700,6 +382707,7 @@ kymriques
 kyrie
 kyrielle
 kyrielles
+kyries
 kyriologique
 kyriologiques
 kystadenome
@@ -393756,6 +393764,7 @@ loofas
 looke
 lookee
 lookees
+looker
 lookes
 looks
 looping
@@ -644257,6 +644266,8 @@ swinguez
 swinguiez
 swinguions
 swinguons
+switch
+switches
 sybarite
 sybarites
 sybaritique
@@ -664435,6 +664446,8 @@ trachytiques
 traciez
 tracions
 track
+tracker
+trackers
 tracks
 tracoir
 tracoirs
@@ -675692,6 +675705,7 @@ twistiez
 twistions
 twistons
 twists
+twitter
 tychius
 tycoon
 tycoons
@@ -690717,6 +690731,8 @@ webtele
 webteles
 webzine
 webzines
+wedge
+wedges
 weeds
 weekend
 weekenda
